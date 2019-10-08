@@ -40,7 +40,9 @@ namespace MostUsedWord
                 else
                 {
                     CheckWordsForDupes(tempWord);
-                }            }
+                }
+            }
+            CheckWordsForDupes(tempWord);
             SetStats();
         }
 

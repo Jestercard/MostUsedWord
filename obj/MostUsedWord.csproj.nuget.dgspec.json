@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Repositories\\_NOT_ON_GIT\\MostUsedWord\\MostUsedWord.csproj": {}
+    "G:\\Repositories\\MostUsedWord\\MostUsedWord.csproj": {}
   },
   "projects": {
-    "G:\\Repositories\\_NOT_ON_GIT\\MostUsedWord\\MostUsedWord.csproj": {
+    "G:\\Repositories\\MostUsedWord\\MostUsedWord.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Repositories\\_NOT_ON_GIT\\MostUsedWord\\MostUsedWord.csproj",
+        "projectUniqueName": "G:\\Repositories\\MostUsedWord\\MostUsedWord.csproj",
         "projectName": "MostUsedWord",
-        "projectPath": "G:\\Repositories\\_NOT_ON_GIT\\MostUsedWord\\MostUsedWord.csproj",
+        "projectPath": "G:\\Repositories\\MostUsedWord\\MostUsedWord.csproj",
         "packagesPath": "C:\\Users\\Jestercard\\.nuget\\packages\\",
-        "outputPath": "G:\\Repositories\\_NOT_ON_GIT\\MostUsedWord\\obj\\",
+        "outputPath": "G:\\Repositories\\MostUsedWord\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
