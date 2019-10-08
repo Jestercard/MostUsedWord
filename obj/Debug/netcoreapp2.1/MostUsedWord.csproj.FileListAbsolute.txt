@@ -1,0 +1,11 @@
+G:\Repositories\_NOT_ON_GIT\MostUsedWord\bin\Debug\netcoreapp2.1\MostUsedWord.deps.json
+G:\Repositories\_NOT_ON_GIT\MostUsedWord\bin\Debug\netcoreapp2.1\MostUsedWord.runtimeconfig.json
+G:\Repositories\_NOT_ON_GIT\MostUsedWord\bin\Debug\netcoreapp2.1\MostUsedWord.runtimeconfig.dev.json
+G:\Repositories\_NOT_ON_GIT\MostUsedWord\bin\Debug\netcoreapp2.1\MostUsedWord.dll
+G:\Repositories\_NOT_ON_GIT\MostUsedWord\bin\Debug\netcoreapp2.1\MostUsedWord.pdb
+G:\Repositories\_NOT_ON_GIT\MostUsedWord\obj\Debug\netcoreapp2.1\MostUsedWord.csprojAssemblyReference.cache
+G:\Repositories\_NOT_ON_GIT\MostUsedWord\obj\Debug\netcoreapp2.1\MostUsedWord.csproj.CoreCompileInputs.cache
+G:\Repositories\_NOT_ON_GIT\MostUsedWord\obj\Debug\netcoreapp2.1\MostUsedWord.AssemblyInfoInputs.cache
+G:\Repositories\_NOT_ON_GIT\MostUsedWord\obj\Debug\netcoreapp2.1\MostUsedWord.AssemblyInfo.cs
+G:\Repositories\_NOT_ON_GIT\MostUsedWord\obj\Debug\netcoreapp2.1\MostUsedWord.dll
+G:\Repositories\_NOT_ON_GIT\MostUsedWord\obj\Debug\netcoreapp2.1\MostUsedWord.pdb
