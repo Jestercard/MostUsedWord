@@ -65,6 +65,12 @@ namespace MostUsedWord
             tempWord.Clear();
         }
 
+        //private void CheckWordsForDupes2(string text)
+        //{
+        //    char seperator = ' ';
+        //    string[] rawWords = text.Split(seperator, StringSplitOptions.RemoveEmptyEntries);
+        //}
+
         private void SetStats()
         {
             SetMostUsedWord();

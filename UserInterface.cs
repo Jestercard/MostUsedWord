@@ -27,9 +27,8 @@ namespace MostUsedWord
                 ClearStats();
                 GetText();
                 ResultsIntoFilledList();
-                //ThinkingForEffect();
                 DisplayStats();
-                //NewTextOrExit();
+                NewTextOrExit();
             }
             EndProgram();
         }
@@ -44,7 +43,6 @@ namespace MostUsedWord
         {
             Console.WriteLine("Hello! Welcome to the Text Analyzer");
             Console.WriteLine("___________________________________");
-
         }
 
         private void GetText()
@@ -66,20 +64,6 @@ namespace MostUsedWord
             {
                 sorter.ShowDictsFull();
             }
-        }
-
-        private void ThinkingForEffect()
-        {
-            Console.Clear();
-            Console.WriteLine("");
-            Console.Write("Analyzing...");
-            Thread.Sleep(1000);
-            Console.Write("...");
-            Thread.Sleep(1000);
-            Console.Write("...");
-            Thread.Sleep(1000);
-            Console.WriteLine("Done!");
-            Thread.Sleep(2000);
         }
 
         private void DisplayStats()
@@ -106,7 +90,7 @@ namespace MostUsedWord
         private void EndProgram()
         {
             Console.WriteLine("");
-            Console.WriteLine("Good Bye! Press Any Key to Exit.");
+            Console.WriteLine("GoodBye! Press Any Key to Exit.");
         }
     }
 }
