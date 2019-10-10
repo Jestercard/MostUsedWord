@@ -6,158 +6,226 @@ namespace MostUsedWord
 {
     class Sorter
     {
-        public string mostUsedWord = "null";
-        public char mostUsedLetter = ' ';
-        public string longestWord = "null";
-        public string shortestWord = "null";
+        //Lists to display to user after text is entered
+        public List<string> mostUsedWord = new List<string>();
+        public List<char> mostUsedLetter = new List<char>();
+        public List<string> longestWord = new List<string>();
+        public List<string> shortestWord = new List<string>();
 
+        //All the letters and words entered into their own seperate lists, not accounting for dupes
+        List<char> rawLetters = new List<char>();
         List<string> rawWords = new List<string>();
-        Dictionary<char, int> letters = new Dictionary<char, int>();
-        Dictionary<string, int> words = new Dictionary<string, int>();
+
+        //Each word or letter paired with a value
+        Dictionary<char, int> letterTimesUsed = new Dictionary<char, int>();
+        Dictionary<string, int> wordTimeUsed = new Dictionary<string, int>();
         Dictionary<string, int> wordLengths = new Dictionary<string, int>();
+
+        //characters to not include in any of the above lists or dictionaries
+        List<char> exclusions = new List<char>() {' ', ',', '.', '/', ';', ':', '"', '[', ']', '{', '}', '(', ')',
+                                                  '!', '@', '#', '$', '%', '^', '&', '*'};
 
         public void SortText(string inputText)
         {
-            string inputTextLower = inputText.ToLower();
-            char[] letterArray = inputTextLower.ToCharArray();
-            List<char> tempWord = new List<char>();
-            foreach (char c in letterArray)
+            //turns the input text into the raw lists, where exclusions are removed but not dupes
+            GetCharsToRawLetterList(inputText);
+            GetWordsToRawWordList(inputText);
+            //checks the raw lists for dupes and removes them, also tallies up the number of dupes
+            CheckDictForDupes(rawLetters, letterTimesUsed);
+            CheckDictForDupes(rawWords, wordTimeUsed);
+            //checks the length of the words in the raw list and adds them to a different dictionary
+            GetWordsToWordLengths(rawWords, wordLengths);
+            //sets the lists with their appropriate strings, based on the values within the dictionaries
+            FindBiggestValue(wordTimeUsed, mostUsedWord);
+            FindBiggestValue(letterTimesUsed, mostUsedLetter);
+            FindBiggestValue(wordLengths, longestWord);
+            FindShortestValue(wordLengths, shortestWord);
+        }
+
+        private void GetCharsToRawLetterList(string input)
+        {
+            char[] letterArray = input.ToCharArray();
+            foreach(var a in letterArray)
             {
-                if (c != ' ')
+                rawLetters.Add(a);
+            }
+            foreach(var b in rawLetters.ToList())
+            {
+                if (exclusions.Contains(b))
                 {
-                    if (letters.ContainsKey(c))
+                    rawLetters.Remove(b);
+                }
+            }
+        }
+
+        private void GetWordsToRawWordList(string input)
+        {
+            char seperator = ' ';
+            string[] wordArray = input.Split(seperator, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var w in wordArray)
+            {
+                char[] charArray = w.ToCharArray();
+                List<char> charList = new List<char>();
+                foreach (var q in charArray)
+                {
+                    if (exclusions.Contains(q))
                     {
-                        letters.TryGetValue(c, out int previousCountLetter);
-                        letters.Remove(c);
-                        letters.Add(c, ++previousCountLetter);
+                        ;
                     }
                     else
                     {
-                        letters.Add(c, 1);
+                        charList.Add(q);
                     }
-                    tempWord.Add(c);
+                }
+                char[] charArray2 = charList.ToArray();
+                string cleansedword = new string(charArray2);
+                rawWords.Add(cleansedword);
+            }
+        }
+
+        private void CheckDictForDupes(List<char> list, Dictionary<char, int> dict)
+        {
+            foreach(var o in list)
+            {
+                if (dict.ContainsKey(o))
+                {
+                    dict.TryGetValue(o, out int previousCountWord);
+                    dict.Remove(o);
+                    dict.Add(o, ++previousCountWord);
                 }
                 else
                 {
-                    CheckWordsForDupes(tempWord);
+                    dict.Add(o, 1);
                 }
             }
-            CheckWordsForDupes(tempWord);
-            SetStats();
         }
 
-        private void CheckWordsForDupes(List<char> tempWord)
+        private void CheckDictForDupes(List<string> list, Dictionary<string, int> dict)
         {
-            char[] wordCharsArray = tempWord.ToArray();
-            string word = new string(wordCharsArray);
-            rawWords.Add(word);
-            if (words.ContainsKey(word))
+            foreach(var o in list)
             {
-                words.TryGetValue(word, out int previousCountWord);
-                words.Remove(word);
-                words.Add(word, ++previousCountWord);
-            }
-            else
-            {
-                words.Add(word, 1);
-                wordLengths.Add(word, tempWord.Count);
-            }
-            tempWord.Clear();
-        }
-
-        //private void CheckWordsForDupes2(string text)
-        //{
-        //    char seperator = ' ';
-        //    string[] rawWords = text.Split(seperator, StringSplitOptions.RemoveEmptyEntries);
-        //}
-
-        private void SetStats()
-        {
-            SetMostUsedWord();
-            SetMostUsedLetter();
-            SetLongestWord();
-            SetShortestWord();
-        }
-
-        private void SetMostUsedWord()
-        {
-            KeyValuePair<string, int> maxWord= new KeyValuePair<string, int>();
-
-            foreach(var mw in words)
-            {
-                if(mw.Value > maxWord.Value)
+                if (dict.ContainsKey(o))
                 {
-                    maxWord = mw;
+                    dict.TryGetValue(o, out int previousCountWord);
+                    dict.Remove(o);
+                    dict.Add(o, ++previousCountWord);
                 }
-            }
-            mostUsedWord = maxWord.Key;
-        }
-        private void SetMostUsedLetter()
-        {
-            KeyValuePair<char, int> maxLetter = new KeyValuePair<char, int>();
-
-            foreach (var ml in letters)
-            {
-                if (ml.Value > maxLetter.Value)
+                else
                 {
-                    maxLetter = ml;
+                    dict.Add(o, 1);
                 }
             }
-
-            mostUsedLetter = maxLetter.Key;
         }
-        private void SetLongestWord()
+        
+        private void GetWordsToWordLengths(List<string> input, Dictionary<string, int> dict)
         {
-            KeyValuePair<string, int> bigWord = new KeyValuePair<string, int>();
-
-            foreach (var bw in wordLengths)
+            foreach(var p in input)
             {
-                if (bw.Value > bigWord.Value)
+                if (wordLengths.ContainsKey(p))
                 {
-                    bigWord = bw;
+                    ;
+                }
+                else
+                {
+                    char[] array = p.ToCharArray();
+                    int length = array.Length;
+                    dict.Add(p, length);
                 }
             }
-            longestWord = bigWord.Key;
         }
-        private void SetShortestWord()
+
+        private void FindBiggestValue(Dictionary<string, int> dict, List<string> list)
         {
-            KeyValuePair<string, int> littleWord = new KeyValuePair<string, int>("null", 100);
-
-            foreach (var lw in wordLengths)
+            KeyValuePair<string, int> maximum = new KeyValuePair<string, int>();
+            foreach(var max in dict)
             {
-                if (lw.Value < littleWord.Value)
+                if(max.Value > maximum.Value)
                 {
-                    littleWord = lw;
+                    maximum = max;
                 }
             }
-            shortestWord = littleWord.Key;
+            foreach(var word in dict)
+            {
+                if(word.Value == maximum.Value)
+                {
+                    list.Add(word.Key);
+                }
+            }
         }
 
-        public void ClearDicts()
+        private void FindBiggestValue(Dictionary<char, int> dict, List<char> list)
+        {
+            KeyValuePair<char, int> maximum = new KeyValuePair<char, int>();
+            foreach (var max in dict)
+            {
+                if (max.Value > maximum.Value)
+                {
+                    maximum = max;
+                }
+            }
+            foreach (var word in dict)
+            {
+                if (word.Value == maximum.Value)
+                {
+                    list.Add(word.Key);
+                }
+            }
+        }
+
+        private void FindShortestValue(Dictionary<string, int> dict, List<string> list)
+        {
+            KeyValuePair<string, int> minimum = new KeyValuePair<string, int>("null", 100);
+
+            foreach (var min in wordLengths)
+            {
+                if (min.Value < minimum.Value)
+                {
+                    minimum = min;
+                }
+            }
+            foreach (var word in dict)
+            {
+                if (word.Value == minimum.Value)
+                {
+                    list.Add(word.Key);
+                }
+            }
+        }
+
+        public void ClearDictsAndLists()
         {
             rawWords.Clear();
-            words.Clear();
-            letters.Clear();
+            rawLetters.Clear();
+            letterTimesUsed.Clear();
+            wordTimeUsed.Clear();
             wordLengths.Clear();
+            mostUsedWord.Clear();
+            mostUsedLetter.Clear();
+            longestWord.Clear();
+            shortestWord.Clear();
         }
 
-        public void ShowDictsFull()
+        public void ShowDictsAndLists()
         {
-            foreach(var o in rawWords)
-            {
-                Console.WriteLine($"RawWordList: {o}");
-            }
-            foreach(var kvp in letters)
+            foreach(var kvp in letterTimesUsed)
             {
                 Console.WriteLine($"LettersDictionary - KEY, VALUE: {kvp}");
             }
-            foreach (var kvp in words)
+            foreach (var kvp in wordTimeUsed)
             {
                 Console.WriteLine($"WordsDictionary - KEY, VALUE: {kvp}");
             }
             foreach (var kvp in wordLengths)
             {
                 Console.WriteLine($"WordLengthsDictionary - KEY, VALUE: {kvp}");
+            }
+            foreach (var raw in rawWords)
+            {
+                Console.WriteLine($"Raw Words - {raw}");
+            }
+            foreach (var raw in rawLetters)
+            {
+                Console.WriteLine($"Raw Letters - {raw}");
             }
         }
     }

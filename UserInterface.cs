@@ -9,34 +9,22 @@ namespace MostUsedWord
     {
         public string inputText;
         public bool endProgram = false;
-
-        public bool debug = true;
+        public bool debug = false;
 
         Sorter sorter = new Sorter();
-
-        List<string> statsList = new List<string>()
-        { "Most Used Word", "Most Used Letter", "Longest Word", "Shortest Word" };
-
-        ArrayList statsListFilled = new ArrayList();
 
         public void Loop()
         {
             IntroScreen();
             while (!endProgram)
             {
-                ClearStats();
+                sorter.ClearDictsAndLists();
                 GetText();
                 ResultsIntoFilledList();
                 DisplayStats();
                 NewTextOrExit();
             }
             EndProgram();
-        }
-
-        private void ClearStats()
-        {
-            statsListFilled.Clear();
-            sorter.ClearDicts();
         }
 
         private void IntroScreen()
@@ -55,26 +43,42 @@ namespace MostUsedWord
 
         private void ResultsIntoFilledList()
         {
-            sorter.SortText(inputText);
-            statsListFilled.Add(sorter.mostUsedWord);
-            statsListFilled.Add(sorter.mostUsedLetter);
-            statsListFilled.Add(sorter.longestWord);
-            statsListFilled.Add(sorter.shortestWord);
+            sorter.SortText(inputText.ToLower());
+            //shows the full list of each dictionary and list if debug option is enabled
             if (debug)
             {
-                sorter.ShowDictsFull();
+                sorter.ShowDictsAndLists();
             }
         }
 
         private void DisplayStats()
         {
+            //TODO add a way to show the number of times "most used" options appear
+
             Console.WriteLine("");
             Console.WriteLine("Here are the stats for your entered Text");
             Console.WriteLine("________________________________________");
-            Console.WriteLine($"{statsList[0]}: {statsListFilled[0]}");
-            Console.WriteLine($"{statsList[1]}: {statsListFilled[1]}");
-            Console.WriteLine($"{statsList[2]}: {statsListFilled[2]}");
-            Console.WriteLine($"{statsList[3]}: {statsListFilled[3]}");
+            Console.WriteLine("Most Used Word(s) appears # time(s):" );
+            foreach (var c in sorter.mostUsedWord)
+            {
+                Console.WriteLine(" " + c);
+            }
+            Console.WriteLine("Most Used Letter(s) appears # time(s):" );
+            foreach(var c in sorter.mostUsedLetter)
+            {
+                Console.WriteLine(" " + c);
+            }
+            Console.WriteLine("Longest Word(s):" );
+            foreach(var c in sorter.longestWord)
+            {
+                Console.WriteLine(" " + c);
+            }
+            Console.WriteLine("Shortest Word(s):" );
+            foreach(var c in sorter.shortestWord)
+            {
+                Console.WriteLine(" " + c);
+            }
+
         }
 
         private void NewTextOrExit()
@@ -86,7 +90,9 @@ namespace MostUsedWord
             {
                 endProgram = true;
             }
+            Console.Clear();
         }
+
         private void EndProgram()
         {
             Console.WriteLine("");
