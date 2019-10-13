@@ -53,17 +53,16 @@ namespace MostUsedWord
 
         private void DisplayStats()
         {
-            //TODO add a way to show the number of times "most used" options appear
 
             Console.WriteLine("");
             Console.WriteLine("Here are the stats for your entered Text");
             Console.WriteLine("________________________________________");
-            Console.WriteLine("Most Used Word(s) appears # time(s):" );
+            Console.WriteLine($"Most Used Word(s) appears {sorter.MostUsedWordValue} time(s):" );
             foreach (var c in sorter.mostUsedWord)
             {
                 Console.WriteLine(" " + c);
             }
-            Console.WriteLine("Most Used Letter(s) appears # time(s):" );
+            Console.WriteLine($"Most Used Letter(s) appears {sorter.MostUsedLetterValue} time(s):" );
             foreach(var c in sorter.mostUsedLetter)
             {
                 Console.WriteLine(" " + c);

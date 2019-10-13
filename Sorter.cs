@@ -12,6 +12,11 @@ namespace MostUsedWord
         public List<string> longestWord = new List<string>();
         public List<string> shortestWord = new List<string>();
 
+
+        //TODO streamline the use for this so its not hard-coded
+        public int MostUsedWordValue { get; set; }
+        public int MostUsedLetterValue { get; set; }
+
         //All the letters and words entered into their own seperate lists, not accounting for dupes
         List<char> rawLetters = new List<char>();
         List<string> rawWords = new List<string>();
@@ -36,8 +41,8 @@ namespace MostUsedWord
             //checks the length of the words in the raw list and adds them to a different dictionary
             GetWordsToWordLengths(rawWords, wordLengths);
             //sets the lists with their appropriate strings, based on the values within the dictionaries
-            FindBiggestValue(wordTimeUsed, mostUsedWord);
-            FindBiggestValue(letterTimesUsed, mostUsedLetter);
+            FindBiggestValue(wordTimeUsed, mostUsedWord, MostUsedWordValue);
+            FindBiggestValue(letterTimesUsed, mostUsedLetter, MostUsedLetterValue);
             FindBiggestValue(wordLengths, longestWord);
             FindShortestValue(wordLengths, shortestWord);
         }
@@ -134,7 +139,7 @@ namespace MostUsedWord
             }
         }
 
-        private void FindBiggestValue(Dictionary<string, int> dict, List<string> list)
+        private void FindBiggestValue(Dictionary<string, int> dict, List<string> list, int value)
         {
             KeyValuePair<string, int> maximum = new KeyValuePair<string, int>();
             foreach(var max in dict)
@@ -151,9 +156,29 @@ namespace MostUsedWord
                     list.Add(word.Key);
                 }
             }
+            MostUsedWordValue = maximum.Value;
         }
 
-        private void FindBiggestValue(Dictionary<char, int> dict, List<char> list)
+        private void FindBiggestValue(Dictionary<string, int> dict, List<string> list)
+        {
+            KeyValuePair<string, int> maximum = new KeyValuePair<string, int>();
+            foreach (var max in dict)
+            {
+                if (max.Value > maximum.Value)
+                {
+                    maximum = max;
+                }
+            }
+            foreach (var word in dict)
+            {
+                if (word.Value == maximum.Value)
+                {
+                    list.Add(word.Key);
+                }
+            }
+        }
+
+        private void FindBiggestValue(Dictionary<char, int> dict, List<char> list, int value)
         {
             KeyValuePair<char, int> maximum = new KeyValuePair<char, int>();
             foreach (var max in dict)
@@ -170,6 +195,7 @@ namespace MostUsedWord
                     list.Add(word.Key);
                 }
             }
+            MostUsedLetterValue = maximum.Value;
         }
 
         private void FindShortestValue(Dictionary<string, int> dict, List<string> list)
