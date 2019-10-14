@@ -28,14 +28,15 @@ namespace MostUsedWord
 
         //characters to not include in any of the above lists or dictionaries
         List<char> exclusions = new List<char>() {' ', ',', '.', '/', ';', ':', '"', '[', ']', '{', '}', '(', ')',
-                                                  '!', '@', '#', '$', '%', '^', '&', '*'};
+                                                  '!', '@', '#', '$', '%', '^', '&', '*', '~', '`', '?', '=', '+',
+                                                  '|', '\'', '\\', '<', '>', '\t', '\0'};
 
         public void SortText(string inputText)
         {
             //turns the input text into the raw lists, where exclusions are removed but not dupes
             GetCharsToRawLetterList(inputText);
             GetWordsToRawWordList(inputText);
-            //checks the raw lists for dupes and removes them, also tallies up the number of dupes
+            //checks the raw lists for dupes and removes them, also tallies up the number of dupes by putting them into dictionaries
             CheckDictForDupes(rawLetters, letterTimesUsed);
             CheckDictForDupes(rawWords, wordTimeUsed);
             //checks the length of the words in the raw list and adds them to a different dictionary
@@ -73,11 +74,7 @@ namespace MostUsedWord
                 List<char> charList = new List<char>();
                 foreach (var q in charArray)
                 {
-                    if (exclusions.Contains(q))
-                    {
-                        ;
-                    }
-                    else
+                    if (!exclusions.Contains(q))
                     {
                         charList.Add(q);
                     }
@@ -124,13 +121,11 @@ namespace MostUsedWord
         
         private void GetWordsToWordLengths(List<string> input, Dictionary<string, int> dict)
         {
+            //TODO use dictionary keys instead of rawWord list
+
             foreach(var p in input)
             {
-                if (wordLengths.ContainsKey(p))
-                {
-                    ;
-                }
-                else
+                if (!wordLengths.ContainsKey(p))
                 {
                     char[] array = p.ToCharArray();
                     int length = array.Length;
@@ -200,7 +195,7 @@ namespace MostUsedWord
 
         private void FindShortestValue(Dictionary<string, int> dict, List<string> list)
         {
-            KeyValuePair<string, int> minimum = new KeyValuePair<string, int>("null", 100);
+            KeyValuePair<string, int> minimum = new KeyValuePair<string, int>("", 2000);
 
             foreach (var min in wordLengths)
             {

@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Collections;
 
 namespace MostUsedWord
 {
     class UserInterface
     {
         public string inputText;
-        public bool endProgram = false;
-        public bool debug = false;
+        private bool endProgram = false;
+        public bool debug = true;
 
         Sorter sorter = new Sorter();
 
@@ -57,23 +54,23 @@ namespace MostUsedWord
             Console.WriteLine("");
             Console.WriteLine("Here are the stats for your entered Text");
             Console.WriteLine("________________________________________");
-            Console.WriteLine($"Most Used Word(s) appears {sorter.MostUsedWordValue} time(s):" );
+            Console.WriteLine($"Most Used Word(s) appears {sorter.MostUsedWordValue} time(s):");
             foreach (var c in sorter.mostUsedWord)
             {
                 Console.WriteLine(" " + c);
             }
-            Console.WriteLine($"Most Used Letter(s) appears {sorter.MostUsedLetterValue} time(s):" );
-            foreach(var c in sorter.mostUsedLetter)
+            Console.WriteLine($"Most Used Letter(s) appears {sorter.MostUsedLetterValue} time(s):");
+            foreach (var c in sorter.mostUsedLetter)
             {
                 Console.WriteLine(" " + c);
             }
-            Console.WriteLine("Longest Word(s):" );
-            foreach(var c in sorter.longestWord)
+            Console.WriteLine("Longest Word(s):");
+            foreach (var c in sorter.longestWord)
             {
                 Console.WriteLine(" " + c);
             }
-            Console.WriteLine("Shortest Word(s):" );
-            foreach(var c in sorter.shortestWord)
+            Console.WriteLine("Shortest Word(s):");
+            foreach (var c in sorter.shortestWord)
             {
                 Console.WriteLine(" " + c);
             }
