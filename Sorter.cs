@@ -40,7 +40,7 @@ namespace MostUsedWord
             CheckDictForDupes(rawLetters, letterTimesUsed);
             CheckDictForDupes(rawWords, wordTimeUsed);
             //checks the length of the words in the raw list and adds them to a different dictionary
-            GetWordsToWordLengths(rawWords, wordLengths);
+            GetWordsToWordLengths(wordTimeUsed, wordLengths);
             //sets the lists with their appropriate strings, based on the values within the dictionaries
             FindBiggestValue(wordTimeUsed, mostUsedWord, MostUsedWordValue);
             FindBiggestValue(letterTimesUsed, mostUsedLetter, MostUsedLetterValue);
@@ -119,17 +119,15 @@ namespace MostUsedWord
             }
         }
         
-        private void GetWordsToWordLengths(List<string> input, Dictionary<string, int> dict)
+        private void GetWordsToWordLengths(Dictionary<string, int> dictInput, Dictionary<string, int> dict)
         {
-            //TODO use dictionary keys instead of rawWord list
-
-            foreach(var p in input)
+            foreach(var p in dictInput)
             {
-                if (!wordLengths.ContainsKey(p))
+                if (!wordLengths.ContainsKey(p.Key))
                 {
-                    char[] array = p.ToCharArray();
+                    char[] array = p.Key.ToCharArray();
                     int length = array.Length;
-                    dict.Add(p, length);
+                    dict.Add(p.Key, length);
                 }
             }
         }
