@@ -6,7 +6,7 @@ namespace MostUsedWord
     {
         public string inputText;
         private bool endProgram = false;
-        public bool debug = true;
+        public bool debug = false;
 
         Sorter sorter = new Sorter();
 
