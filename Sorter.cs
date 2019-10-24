@@ -25,9 +25,10 @@ namespace MostUsedWord
         Dictionary<string, int> wordLengths = new Dictionary<string, int>();
 
         //characters to not include in any of the above lists or dictionaries
-        List<char> exclusions = new List<char>() {' ', ',', '.', '/', ';', ':', '"', '[', ']', '{', '}', '(', ')',
-                                                  '!', '@', '#', '$', '%', '^', '&', '*', '~', '`', '?', '=', '+',
-                                                  '|', '\'', '\\', '<', '>', '\t', '\0'};
+        List<char> inclusions = new List<char>() {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+                                                  'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+                                                  'w', 'x', 'y', 'z', '-', '0', '1', '2', '3', '4', '5',
+                                                  '6', '7', '8', '9'};
 
         public void SortText(string inputText)
         {
@@ -51,13 +52,9 @@ namespace MostUsedWord
             char[] letterArray = input.ToCharArray();
             foreach(var a in letterArray)
             {
-                rawLetters.Add(a);
-            }
-            foreach(var b in rawLetters.ToList())
-            {
-                if (exclusions.Contains(b))
+                if (inclusions.Contains(a))
                 {
-                    rawLetters.Remove(b);
+                    rawLetters.Add(a);
                 }
             }
         }
@@ -72,7 +69,7 @@ namespace MostUsedWord
                 List<char> charList = new List<char>();
                 foreach (var q in charArray)
                 {
-                    if (!exclusions.Contains(q))
+                    if (inclusions.Contains(q))
                     {
                         charList.Add(q);
                     }
